@@ -99,3 +99,65 @@ DeviceNetworkEvents
 <img width="1386" height="377" alt="8" src="https://github.com/user-attachments/assets/5e2c0850-3f62-42e0-ad06-2a61e40641de" />
 
 ---
+
+## Chronological Event Timeline 
+
+### 1. File Download - TOR Installer
+
+- **Timestamp:** `2025-11-07T09:08:15.8780773Z`
+- **Event:** The user "a1388wx1" downloaded a file named `tor-browser-windows-x86_64-portable-15.0.exe` to the Downloads folder.
+- **Action:** File download detected.
+- **File Path:** `C:\Users\a1388wx1\Downloads\tor-browser-windows-x86_64-portable-15.0.exe`
+
+### 2. Process Execution - TOR Browser Installation
+
+- **Timestamp:** `2025-11-07T09:16:15.6532194Z`
+- **Event:** The user "a1388wx1" executed the file `tor-browser-windows-x86_64-portable-15.0.exe` in silent mode, initiating a background installation of the TOR Browser.
+- **Action:** Process creation detected.
+- **Command:** `tor-browser-windows-x86_64-portable-15.0.exe /S`
+- **File Path:** `C:\Users\employee\Downloads\tor-browser-windows-x86_64-portable-15.0.exe`
+
+### 3. Process Execution - TOR Browser Launch
+
+- **Timestamp:** `2025-11-07T09:09:13.1885499Z`
+- **Event:** User "a1388wx1" opened the TOR browser. Subsequent processes associated with TOR browser, such as `firefox.exe` and `tor.exe`, were also created, indicating that the browser launched successfully.
+- **Action:** Process creation of TOR browser-related executables detected.
+- **File Path:** `C:\Users\a1388wx1\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe`
+
+### 4. Network Connection - TOR Network
+
+- **Timestamp:** `2025-11-07T09:18:24.1727883Z`
+- **Event:** A network connection to IP `51.15.89.200` on port `9001` by user "a1388wx1" was established using `tor.exe`, confirming TOR browser network activity.
+- **Action:** Connection success.
+- **Process:** `tor.exe`
+- **File Path:** `c:\users\a1388wx1\desktop\tor browser\browser\torbrowser\tor\tor.exe`
+
+### 5. Additional Network Connections - TOR Browser Activity
+
+- **Timestamps:**
+  - `2025-11-07T09:18:27.5760518Z` - Local connection to `45.14.233.247` on port `443`.
+  - `2025-11-07T09:18:27.6008602Z` - Connected to `64.65.0.80` on port `443`.
+  - `2025-11-07T09:18:37.3882292Z` - Local connection to `127.0.0.1` on port `9150`.
+- **Event:** Additional TOR network connections were established, indicating ongoing activity by user "a1388wx1" through the TOR browser.
+- **Action:** Multiple successful connections detected.
+
+### 6. File Creation - TOR Shopping List
+
+- **Timestamp:** `2025-11-07T09:35:32.0512157Z`
+- **Event:** The user "a1388wx1" created a file named `tor-shopping-list.txt` on the desktop, potentially indicating a list or notes related to their TOR browser activities.
+- **Action:** File creation detected.
+- **File Path:** `C:\Users\a1388wx1\Desktop\tor-shopping-list.txt`
+
+---
+
+## Summary
+
+The user "a1388wx1" on the "vm-bartek" device initiated and completed the installation of the TOR browser. They proceeded to launch the browser, establish connections within the TOR network, and created various files related to TOR on their desktop, including a file named `tor-shopping-list.txt`. This sequence of activities indicates that the user actively installed, configured, and used the TOR browser, likely for anonymous browsing purposes, with possible documentation in the form of the "shopping list" file.
+
+---
+
+## Response Taken
+
+TOR usage was confirmed on the endpoint `vm-bartek` by the user `a1388wx1`. The device was isolated, and the user's direct manager was notified.
+
+---
