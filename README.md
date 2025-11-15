@@ -4,6 +4,9 @@
 
 # Threat Hunt Report: Unauthorized TOR Usage
 
+## Executive Summary
+A targeted threat hunt was performed in Microsoft Defender for Endpoint to identify any unauthorized use of the Tor Browser on corporate Windows 11 endpoints. One user account (`a1388wx1`) on device `vm-bartek` was found to have downloaded, installed, and actively used Tor, including establishing outbound connections to Tor network IPs on known Tor ports. The device was isolated and the user's manager notified; further policy and control improvements are recommended to prevent unapproved anonymization tools.
+
 ## Platforms and Languages Leveraged
 - Windows 11 Virtual Machines (Microsoft Azure)
 - EDR Platform: Microsoft Defender for Endpoint
@@ -29,6 +32,8 @@ Searched for any file that had the string "tor" in it and discovered what looks 
 **Query used to locate events:**
 
 ```kql
+let VMname = "vm-bartek";
+let SusAccount = "a1388wx1";
 DeviceFileEvents
 | where DeviceName == VMname
 | where InitiatingProcessAccountName == SusAccount
@@ -49,6 +54,7 @@ Searched `DeviceProcessEvents` for any `ProcessCommandLine` that contained the s
 **Query used to locate event:**
 
 ```kql
+let VMname = "vm-bartek";
 DeviceProcessEvents
 | where DeviceName == VMname
 | where Timestamp >= datetime(2025-11-07T09:08:15.8780773Z)
@@ -68,6 +74,7 @@ Searched for any indication that user "a1388wx1" actually opened the TOR browser
 **Query used to locate events:**
 
 ```kql
+let VMname = "vm-bartek";
 DeviceProcessEvents
 | where DeviceName == VMname
 | where Timestamp >= datetime(2025-11-07T09:08:15.8780773Z)
@@ -87,10 +94,11 @@ Searched for any indication the TOR browser was used to establish a connection u
 **Query used to locate events:**
 
 ```kql
+let VMname = "vm-bartek";
 DeviceNetworkEvents
 | where DeviceName == VMname
 | where Timestamp >= datetime(2025-11-07T09:08:15.8780773Z)
-| where RemotePort in ("9001", "9030", "9040", "9050", "9150", "9151", "80", "443")
+| where RemotePort in (9001, 9030, 9040, 9050, 9150, 9151, 80, 443)
 | where InitiatingProcessAccountName != "system"
 | project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessFileName
 | order by Timestamp desc
@@ -115,7 +123,7 @@ DeviceNetworkEvents
 - **Event:** The user "a1388wx1" executed the file `tor-browser-windows-x86_64-portable-15.0.exe` in silent mode, initiating a background installation of the TOR Browser.
 - **Action:** Process creation detected.
 - **Command:** `tor-browser-windows-x86_64-portable-15.0.exe /S`
-- **File Path:** `C:\Users\employee\Downloads\tor-browser-windows-x86_64-portable-15.0.exe`
+- **File Path:** `C:\Users\a1388wx1\Downloads\tor-browser-windows-x86_64-portable-15.0.exe`
 
 ### 3. Process Execution - TOR Browser Launch
 
@@ -153,6 +161,15 @@ DeviceNetworkEvents
 ## Summary
 
 The user "a1388wx1" on the "vm-bartek" device initiated and completed the installation of the TOR browser. They proceeded to launch the browser, establish connections within the TOR network, and created various files related to TOR on their desktop, including a file named `tor-shopping-list.txt`. This sequence of activities indicates that the user actively installed, configured, and used the TOR browser, likely for anonymous browsing purposes, with possible documentation in the form of the "shopping list" file.
+
+---
+
+## MITRE ATT&CK Mapping
+
+- **Use of Tor for anonymized traffic / potential C2:**
+  - T1090 - Proxy
+  - T1090.003 - Multi-hop Proxy (Tor)
+  - T1573 - Encrypted Channel
 
 ---
 
